@@ -14,8 +14,11 @@ export function RememberSection() {
             style={deckDelay(Math.min(i * 40, 280))}
             className="deck-item flex items-start gap-4 rounded-2xl border border-line bg-surface/60 px-5 py-4"
           >
-            <span className="font-mono text-sm font-bold text-energy">
-              {String(i + 1).padStart(2, "0")}
+            {/* Line box cùng cỡ chữ với nội dung để số nằm đúng baseline. */}
+            <span className="shrink-0 text-[15px] leading-relaxed">
+              <span className="font-mono text-[13px] font-bold tabular-nums text-energy">
+                {String(i + 1).padStart(2, "0")}
+              </span>
             </span>
             <p className="text-[15px] leading-relaxed text-text/90">{item}</p>
           </div>

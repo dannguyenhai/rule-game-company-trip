@@ -130,10 +130,14 @@ function Block({
       <ul className="mt-2 space-y-1.5">
         {items.map((item) => (
           <li key={item} className="flex gap-2.5 text-[14px] leading-relaxed">
-            <span
-              aria-hidden
-              className={clsx("mt-[7px] size-1.5 shrink-0 rounded-full", dotClass)}
-            />
+            <span aria-hidden className="shrink-0 leading-relaxed">
+              <span
+                className={clsx(
+                  "block size-1.5 translate-y-2 rounded-full",
+                  dotClass,
+                )}
+              />
+            </span>
             <span className="text-text/90">{item}</span>
           </li>
         ))}

@@ -83,18 +83,20 @@ export function RuleList({
     <ul className={clsx("space-y-2.5", className)}>
       {items.map((item, i) => (
         <li key={i} className="flex gap-3 text-[15px] leading-relaxed">
-          <span
-            aria-hidden
-            className={clsx(
-              "mt-[7px] shrink-0",
-              marker === "dot" && "size-1.5 rounded-full bg-energy",
-              marker === "check" && "mt-0 text-energy",
-              marker === "number" &&
-                "mt-0 font-mono text-[11px] leading-6 text-energy",
-            )}
-          >
-            {marker === "number" ? String(i + 1).padStart(2, "0") : null}
-            {marker === "check" ? "✓" : null}
+          {/* Marker nằm trong một line box cùng cỡ chữ với nội dung, nên số và
+              dấu tick chia chung baseline với dòng đầu tiên bên phải. */}
+          <span aria-hidden className="shrink-0 leading-relaxed">
+            {marker === "dot" ? (
+              <span className="block size-1.5 translate-y-2.25 rounded-full bg-energy" />
+            ) : null}
+            {marker === "number" ? (
+              <span className="font-mono text-[11px] font-semibold tabular-nums text-energy">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            ) : null}
+            {marker === "check" ? (
+              <span className="text-[13px] text-energy">✓</span>
+            ) : null}
           </span>
           <span className="text-text/90">{item}</span>
         </li>
