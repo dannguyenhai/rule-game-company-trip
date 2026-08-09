@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   MAKE YOUR MOVE — THE STRATEGY GAME
+   Design tokens. Dark, strategic, energy-driven.
+   --------------------------------------------------------------- */
+
+:root {
+  --bg: #05070f;
+  --bg-deep: #03050b;
+  --surface: #0a0e1b;
+  --surface-2: #101627;
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
+
+  --text: #e9edf7;
+  --text-muted: #8c96ad;
+  --text-dim: #5d6679;
+
+  --energy: #ffc24b;
+  --energy-soft: #ffdb96;
+  --route: #4cc9f0;
+
+  --alpha: #5b8cff;
+  --beta: #34d399;
+  --gamma: #fbbf24;
+  --delta: #fb7185;
+
+  /* Strong curves — the built-in CSS easings are too weak. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-dim: var(--text-dim);
+
+  --color-energy: var(--energy);
+  --color-energy-soft: var(--energy-soft);
+  --color-route: var(--route);
+
+  --color-alpha: var(--alpha);
+  --color-beta: var(--beta);
+  --color-gamma: var(--gamma);
+  --color-delta: var(--delta);
+
+  --font-sans: var(--font-be-vietnam);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Sticky section nav + breathing room when jumping to an anchor. */
+  scroll-padding-top: 88px;
+  background-color: var(--bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--energy);
+  color: #05070f;
+}
+
+/* ---------------------------------------------------------------
+   Background — the route grid the KV brief asks for.
+   Pure CSS so it costs nothing and never blocks paint.
+   --------------------------------------------------------------- */
+
+.bg-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      rgb(76 201 240 / 0.14) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      90% 60% at 85% 105%,
+      rgb(255 194 75 / 0.1) 0%,
+      transparent 60%
+    ),
+    var(--bg);
+}
+
+.bg-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(100% 70% at 50% 0%, #000 20%, transparent 85%);
+}
+
+/* ---------------------------------------------------------------
+   Scroll reveal — IntersectionObserver flips the attribute,
+   CSS does the motion (off the main thread).
+   --------------------------------------------------------------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal="visible"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------
+   Pressable — every tappable surface answers the finger.
+   --------------------------------------------------------------- */
+
+.pressable {
+  transition: transform 160ms var(--ease-out);
+}
+
+.pressable:active {
+  transform: scale(0.97);
+}
+
+/* ---------------------------------------------------------------
+   Energy pulse on the hero node. Rare, decorative, off-thread.
+   --------------------------------------------------------------- */
+
+@keyframes energy-pulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.energy-pulse::before,
+.energy-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid var(--energy);
+  animation: energy-pulse 2800ms var(--ease-out) infinite;
+}
+
+.energy-pulse::after {
+  animation-delay: 1400ms;
+}
+
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+
+.route-flow {
+  stroke-dasharray: 4 10;
+  animation: route-dash 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    transform: none;
+    transition: opacity 200ms ease;
+  }
+
+  .energy-pulse::before,
+  .energy-pulse::after,
+  .route-flow {
+    animation: none;
+  }
+
+  .pressable:active {
+    transform: none;
+  }
+}
