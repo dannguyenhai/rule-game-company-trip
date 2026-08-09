@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { JOURNEY } from "@/lib/content";
-import { Reveal } from "./Reveal";
-import { Chip } from "./ui";
+import { Chip, deckDelay } from "./ui";
 
 const NODE_STYLE: Record<string, string> = {
   ritual: "border-line-strong bg-surface-2 text-muted",
@@ -20,11 +19,10 @@ export function JourneyMap() {
       />
 
       {JOURNEY.map((stop, i) => (
-        <Reveal
+        <li
           key={stop.code}
-          as="li"
-          delay={Math.min(i * 45, 320)}
-          className="relative flex gap-4 pb-6 last:pb-0"
+          style={deckDelay(Math.min(i * 40, 320))}
+          className="deck-item relative flex gap-4 pb-6 last:pb-0"
         >
           <div className="relative z-10 shrink-0">
             <span
@@ -38,11 +36,16 @@ export function JourneyMap() {
             </span>
           </div>
 
-          <div className="min-w-0 flex-1 pt-1.5">
+          <div className="min-w-0 flex-1 pt-1">
+            {/* Tên Thử thách là thứ người chơi tìm trên sơ đồ, nên nó to nhất. */}
             <h3
               className={clsx(
-                "text-[15px] font-bold tracking-tight",
-                stop.kind === "final" && "text-energy",
+                "font-extrabold tracking-tight",
+                stop.kind === "challenge" &&
+                  "text-[17px] uppercase text-energy sm:text-lg",
+                stop.kind === "auction" && "text-[16px] uppercase text-route",
+                stop.kind === "final" && "text-[17px] uppercase text-energy",
+                stop.kind === "ritual" && "text-[15px]",
               )}
             >
               {stop.title}
@@ -63,7 +66,7 @@ export function JourneyMap() {
               </div>
             ) : null}
           </div>
-        </Reveal>
+        </li>
       ))}
     </ol>
   );

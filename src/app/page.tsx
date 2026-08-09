@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { QRPanel } from "@/components/QRPanel";
 import { Reveal } from "@/components/Reveal";
+import { XipatLogo } from "@/components/XipatLogo";
 import { DESTINATION_NODES, EVENT } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -23,7 +24,8 @@ export default function Home() {
       <div className="relative grid w-full max-w-md items-center gap-12 lg:max-w-5xl lg:grid-cols-[1fr_auto] lg:gap-20">
         <div className="text-center lg:text-left">
           <Reveal>
-            <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-muted">
+            <XipatLogo size="lg" className="justify-center lg:justify-start" />
+            <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.32em] text-muted">
               {EVENT.org}
             </p>
 
@@ -144,22 +146,12 @@ function SeaRoute() {
           className="route-flow"
         />
 
+        {/* Chỉ giữ chấm sáng, không gắn nhãn chữ: nhãn nằm chồng lên phần
+            nội dung ở mọi tỉ lệ màn hình rộng. */}
         {ROUTE_NODES.map(({ x, y }, i) => (
           <g key={DESTINATION_NODES[i]}>
             <circle cx={x} cy={y} r="12" fill="var(--energy)" fillOpacity="0.14" />
             <circle cx={x} cy={y} r="5" fill="var(--energy)" fillOpacity="0.9" />
-            <text
-              x={x}
-              y={y - 22}
-              textAnchor="middle"
-              fill="var(--route)"
-              fillOpacity="0.7"
-              fontSize="15"
-              letterSpacing="4"
-              fontFamily="var(--font-mono)"
-            >
-              {DESTINATION_NODES[i].toUpperCase()}
-            </text>
           </g>
         ))}
       </svg>

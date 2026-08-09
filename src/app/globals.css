@@ -157,6 +157,36 @@ body {
 }
 
 /* ---------------------------------------------------------------
+   Deck — mỗi màn vào có một nhịp cascade rất ngắn cho các khối con.
+   Chạy bằng CSS nên không tốn main thread khi màn đang chuyển.
+   --------------------------------------------------------------- */
+
+@keyframes deck-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes deck-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.deck-item {
+  animation: deck-in 320ms var(--ease-out) backwards;
+  animation-delay: var(--deck-delay, 0ms);
+}
+
+/* ---------------------------------------------------------------
    Pressable — every tappable surface answers the finger.
    --------------------------------------------------------------- */
 
@@ -222,6 +252,10 @@ body {
   .energy-pulse::after,
   .route-flow {
     animation: none;
+  }
+
+  .deck-item {
+    animation: deck-fade 200ms ease backwards;
   }
 
   .pressable:active {

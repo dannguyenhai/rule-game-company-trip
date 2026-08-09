@@ -1,45 +1,9 @@
 import clsx from "clsx";
-import type { ReactNode } from "react";
-import { Reveal } from "./Reveal";
+import type { CSSProperties, ReactNode } from "react";
 
-/* ------------------------------------------------------------------ */
-/* Section                                                             */
-/* ------------------------------------------------------------------ */
-
-export function Section({
-  id,
-  index,
-  title,
-  lead,
-  children,
-}: {
-  id: string;
-  index: string;
-  title: string;
-  lead?: string;
-  children: ReactNode;
-}) {
-  return (
-    <section id={id} className="scroll-mt-24 py-12 sm:py-16">
-      <Reveal>
-        <div className="flex items-baseline gap-3">
-          <span className="font-mono text-[11px] tracking-[0.2em] text-energy">
-            {index}
-          </span>
-          <span className="h-px flex-1 bg-line" />
-        </div>
-        <h2 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
-          {title}
-        </h2>
-        {lead ? (
-          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted">
-            {lead}
-          </p>
-        ) : null}
-      </Reveal>
-      <div className="mt-7 space-y-4">{children}</div>
-    </section>
-  );
+/** Độ trễ cascade cho một khối trong màn đang vào. */
+export function deckDelay(ms: number): CSSProperties {
+  return { "--deck-delay": `${ms}ms` } as CSSProperties;
 }
 
 /* ------------------------------------------------------------------ */
@@ -62,44 +26,43 @@ export function Card({
   accent?: "energy" | "route" | "none";
 }) {
   return (
-    <Reveal delay={delay}>
-      <div
-        className={clsx(
-          "relative overflow-hidden rounded-2xl border border-line bg-surface/70 p-5 backdrop-blur-sm sm:p-6",
-          className,
-        )}
-      >
-        {accent && accent !== "none" ? (
-          <span
-            aria-hidden
-            className={clsx(
-              "absolute inset-x-0 top-0 h-px",
-              accent === "energy"
-                ? "bg-linear-to-r from-transparent via-energy to-transparent"
-                : "bg-linear-to-r from-transparent via-route to-transparent",
-            )}
-          />
-        ) : null}
-        {eyebrow ? (
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-dim">
-            {eyebrow}
-          </p>
-        ) : null}
-        {title ? (
-          <h3
-            className={clsx(
-              "text-base font-bold tracking-tight sm:text-lg",
-              eyebrow && "mt-2",
-            )}
-          >
-            {title}
-          </h3>
-        ) : null}
-        <div className={clsx(title || eyebrow ? "mt-3" : undefined)}>
-          {children}
-        </div>
+    <div
+      style={deckDelay(delay)}
+      className={clsx(
+        "deck-item relative overflow-hidden rounded-2xl border border-line bg-surface/70 p-5 backdrop-blur-sm sm:p-6",
+        className,
+      )}
+    >
+      {accent && accent !== "none" ? (
+        <span
+          aria-hidden
+          className={clsx(
+            "absolute inset-x-0 top-0 h-px",
+            accent === "energy"
+              ? "bg-linear-to-r from-transparent via-energy to-transparent"
+              : "bg-linear-to-r from-transparent via-route to-transparent",
+          )}
+        />
+      ) : null}
+      {eyebrow ? (
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-dim">
+          {eyebrow}
+        </p>
+      ) : null}
+      {title ? (
+        <h3
+          className={clsx(
+            "text-base font-bold tracking-tight sm:text-lg",
+            eyebrow && "mt-2",
+          )}
+        >
+          {title}
+        </h3>
+      ) : null}
+      <div className={clsx(title || eyebrow ? "mt-3" : undefined)}>
+        {children}
       </div>
-    </Reveal>
+    </div>
   );
 }
 
@@ -177,6 +140,88 @@ export function Callout({
       <div className={clsx("text-[15px] leading-relaxed", label && "mt-1.5")}>
         {children}
       </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Nhấn mạnh — con số và điều kiện then chốt của luật chơi              */
+/* ------------------------------------------------------------------ */
+
+export function Hi({
+  children,
+  tone = "energy",
+}: {
+  children: ReactNode;
+  tone?: "energy" | "route" | "danger";
+}) {
+  return (
+    <strong
+      className={clsx(
+        "mx-0.5 inline-block rounded-md px-1.5 py-0.5 text-[0.95em] font-bold whitespace-nowrap",
+        tone === "energy" && "bg-energy/12 text-energy",
+        tone === "route" && "bg-route/12 text-route",
+        tone === "danger" && "bg-delta/12 text-delta",
+      )}
+    >
+      {children}
+    </strong>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Phần thưởng — thứ người chơi cần thấy đầu tiên và nhớ lâu nhất       */
+/* ------------------------------------------------------------------ */
+
+export function PrizeBanner({
+  eyebrow,
+  lead,
+  amount,
+  title,
+  className,
+}: {
+  eyebrow: string;
+  lead: ReactNode;
+  amount: string;
+  title: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={clsx(
+        "relative overflow-hidden rounded-2xl border border-energy/30 bg-linear-to-br from-energy/14 via-energy/5 to-transparent p-6 text-center sm:p-8",
+        className,
+      )}
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-24 left-1/2 size-56 -translate-x-1/2 rounded-full bg-energy/20 blur-3xl"
+      />
+
+      <p className="relative font-mono text-[10px] uppercase tracking-[0.24em] text-energy">
+        {eyebrow}
+      </p>
+
+      <p className="relative mt-3 text-[15px] leading-relaxed text-text/90">
+        {lead}
+      </p>
+
+      <p className="relative mt-4 text-[clamp(1.6rem,7.5vw,2.6rem)] font-black uppercase leading-none tracking-tight text-text">
+        Quán quân
+      </p>
+      <p className="relative mt-2 text-[13px] font-semibold text-muted sm:text-sm">
+        {title}
+      </p>
+
+      <p
+        className="relative mt-5 font-mono text-[clamp(1.75rem,9vw,3rem)] font-black leading-none tracking-tight text-energy"
+        style={{ textShadow: "0 0 32px rgb(79 193 255 / 0.45)" }}
+      >
+        {amount}
+      </p>
+      <p className="relative mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-dim">
+        Tiền thưởng
+      </p>
     </div>
   );
 }

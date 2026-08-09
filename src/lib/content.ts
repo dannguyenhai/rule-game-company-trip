@@ -18,22 +18,6 @@ export const EVENT = {
 /** Các cột mốc chiến lược trên Key Visual của sự kiện. */
 export const DESTINATION_NODES = ["X2", "Moats", "AI-First"] as const;
 
-/** Mục lục — dùng chung cho thanh điều hướng và scrollspy. */
-export const SECTIONS = [
-  { id: "muc-tieu", label: "Mục tiêu" },
-  { id: "chuan-bi", label: "Chuẩn bị" },
-  { id: "kich-hoat", label: "Kích hoạt Energy" },
-  { id: "hai-trinh", label: "Hải trình" },
-  { id: "so-do", label: "Sơ đồ" },
-  { id: "dau-tu", label: "Đầu tư Energy" },
-  { id: "cong-tru", label: "Cộng / Trừ" },
-  { id: "dau-gia", label: "Đấu giá" },
-  { id: "booster", label: "Booster" },
-  { id: "ket-qua", label: "Kết quả" },
-  { id: "phan-dinh", label: "Phân định" },
-  { id: "ghi-nho", label: "07 điều cần nhớ" },
-] as const;
-
 /* ------------------------------------------------------------------ */
 /* Sơ đồ hải trình                                                      */
 /* ------------------------------------------------------------------ */

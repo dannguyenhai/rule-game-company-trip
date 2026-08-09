@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { Booster } from "@/lib/content";
-import { Reveal } from "./Reveal";
+import { deckDelay } from "./ui";
 
 const TONE: Record<
   Booster["key"],
@@ -42,75 +42,74 @@ export function BoosterCard({
   const tone = TONE[booster.key];
 
   return (
-    <Reveal delay={delay}>
-      <article
+    <article
+      style={deckDelay(delay)}
+      className={clsx(
+        "deck-item relative overflow-hidden rounded-2xl border bg-surface/70 p-5 sm:p-6",
+        tone.border,
+      )}
+    >
+      <span
+        aria-hidden
         className={clsx(
-          "relative overflow-hidden rounded-2xl border bg-surface/70 p-5 sm:p-6",
-          tone.border,
+          "pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-linear-to-br to-transparent blur-2xl",
+          tone.glow,
         )}
-      >
-        <span
-          aria-hidden
-          className={clsx(
-            "pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-linear-to-br to-transparent blur-2xl",
-            tone.glow,
-          )}
-        />
+      />
 
-        <header className="relative flex items-center gap-2.5">
-          <span className={clsx("size-2.5 rounded-sm", tone.dot)} aria-hidden />
-          <h3 className="text-lg font-extrabold uppercase tracking-tight">
-            {booster.name}
-          </h3>
-          <span className="text-dim">—</span>
-          <span className={clsx("text-sm font-semibold", tone.text)}>
-            {booster.alias}
-          </span>
-        </header>
+      <header className="relative flex items-center gap-2.5">
+        <span className={clsx("size-2.5 rounded-sm", tone.dot)} aria-hidden />
+        <h3 className="text-lg font-extrabold uppercase tracking-tight">
+          {booster.name}
+        </h3>
+        <span className="text-dim">—</span>
+        <span className={clsx("text-sm font-semibold", tone.text)}>
+          {booster.alias}
+        </span>
+      </header>
 
-        <p className="relative mt-3 text-[15px] font-medium leading-relaxed">
-          {booster.tagline}
-        </p>
+      <p className="relative mt-3 text-[15px] font-medium leading-relaxed">
+        {booster.tagline}
+      </p>
 
-        <p className="relative mt-3 rounded-lg bg-bg-deep/60 px-3.5 py-2.5 text-[13px] font-medium leading-relaxed text-muted">
-          {booster.timing}
-        </p>
+      <p className="relative mt-3 rounded-lg bg-bg-deep/60 px-3.5 py-2.5 text-[13px] font-medium leading-relaxed text-muted">
+        {booster.timing}
+      </p>
 
-        <div className="relative mt-4 space-y-4">
-          {booster.effect ? (
-            <Block label="Hiệu ứng" items={booster.effect} dotClass={tone.dot} />
-          ) : null}
-          {booster.win ? (
-            <Block
-              label="Nếu chiến thắng"
-              items={booster.win}
-              dotClass="bg-beta"
-            />
-          ) : null}
-          {booster.lose ? (
-            <Block
-              label="Nếu không chiến thắng"
-              items={booster.lose}
-              dotClass="bg-delta"
-            />
-          ) : null}
-          {booster.examples ? (
-            <div className="rounded-lg border border-line bg-bg-deep/40 px-3.5 py-3">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-dim">
-                Ví dụ
-              </p>
-              <ul className="mt-2 space-y-1.5">
-                {booster.examples.map((ex) => (
-                  <li key={ex} className="text-[14px] leading-relaxed text-muted">
-                    {ex}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-        </div>
-      </article>
-    </Reveal>
+      <div className="relative mt-4 space-y-4">
+        {booster.effect ? (
+          <Block label="Hiệu ứng" items={booster.effect} dotClass={tone.dot} />
+        ) : null}
+        {booster.win ? (
+          <Block
+            label="Nếu chiến thắng"
+            items={booster.win}
+            dotClass="bg-beta"
+          />
+        ) : null}
+        {booster.lose ? (
+          <Block
+            label="Nếu không chiến thắng"
+            items={booster.lose}
+            dotClass="bg-delta"
+          />
+        ) : null}
+        {booster.examples ? (
+          <div className="rounded-lg border border-line bg-bg-deep/40 px-3.5 py-3">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-dim">
+              Ví dụ
+            </p>
+            <ul className="mt-2 space-y-1.5">
+              {booster.examples.map((ex) => (
+                <li key={ex} className="text-[14px] leading-relaxed text-muted">
+                  {ex}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    </article>
   );
 }
 
