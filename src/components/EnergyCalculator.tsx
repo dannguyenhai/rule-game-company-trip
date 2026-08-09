@@ -52,7 +52,7 @@ export function EnergyCalculator() {
         ))}
       </div>
 
-      <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+      <dl className="mt-5 grid grid-cols-2 gap-3">
         <Metric
           label="Đầu tư tối đa / Thử thách"
           hint="30% Energy, làm tròn xuống"
@@ -97,11 +97,13 @@ function Metric({
   tone?: "neutral" | "energy" | "route";
 }) {
   return (
-    <div className="rounded-xl border border-line bg-bg-deep/50 px-4 py-3.5">
-      <dt className="text-[13px] font-medium text-muted">{label}</dt>
+    <div className="rounded-xl border border-line bg-bg-deep/50 px-3.5 py-3">
+      <dt className="text-[12px] font-medium leading-snug text-muted">
+        {label}
+      </dt>
       <dd
         className={
-          "mt-1 font-mono text-2xl font-bold tabular-nums " +
+          "mt-1 font-mono text-xl font-bold tabular-nums sm:text-2xl " +
           (tone === "energy"
             ? "text-energy"
             : tone === "route"

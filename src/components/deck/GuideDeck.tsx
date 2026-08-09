@@ -13,6 +13,13 @@ const MOMENTUM_MS = 400;
 const WHEEL_THRESHOLD = 80;
 const SWIPE_THRESHOLD = 60;
 
+/** Các phần đã gộp — link cũ vẫn mở đúng chỗ nội dung chuyển đến. */
+const HASH_ALIASES: Record<string, string> = {
+  "kich-hoat": "chuan-bi",
+  "cong-tru": "dau-tu",
+  "phan-dinh": "ket-qua",
+};
+
 export function GuideDeck() {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -166,9 +173,9 @@ export function GuideDeck() {
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      const found = DECK.findIndex(
-        (entry) => entry.id === initialHashRef.current,
-      );
+      const hash = initialHashRef.current ?? "";
+      const id = HASH_ALIASES[hash] ?? hash;
+      const found = DECK.findIndex((entry) => entry.id === id);
       if (found > 0) goTo(found, 1);
     });
     return () => cancelAnimationFrame(frame);

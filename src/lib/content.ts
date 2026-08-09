@@ -166,11 +166,7 @@ export const BOOSTERS: Booster[] = [
     timing:
       "Kích hoạt SAU khi không chiến thắng tại Thử thách 4 hoặc Thử thách 5, với điều kiện Tổng Energy sau khi bị trừ còn từ 80 Energy trở xuống.",
     effect: ["Hoàn lại 50% Energy vừa mất, tối đa 20 Energy."],
-    examples: [
-      "Mất 20 → được hoàn 10.",
-      "Mất 30 → được hoàn 15.",
-      "Mất 50 → được hoàn tối đa 20.",
-    ],
+    examples: ["Mất 20 → được hoàn 10.", "Mất 50 → được hoàn tối đa 20."],
   },
 ];
 

@@ -6,7 +6,7 @@ import { Card, RuleList } from "@/components/ui";
 export function BoosterSection() {
   return (
     <DeckShell
-      index="09"
+      index="07"
       title="Hệ thống 04 Booster"
       lead="Mỗi Booster là một chiến thuật khác nhau. Chọn đúng thứ hợp với thế trận của đội bạn."
     >

@@ -38,10 +38,18 @@ export function QRPanel() {
           <QRCodeSVG
             value={url}
             size={208}
-            level="M"
+            // Mức sửa lỗi H chịu được 30% mã bị che, nên logo ở giữa không
+            // làm mã mất khả năng quét.
+            level="H"
             bgColor="#ffffff"
             fgColor="#041226"
             marginSize={0}
+            imageSettings={{
+              src: "/xipat-qr-mark.svg",
+              height: 46,
+              width: 46,
+              excavate: true,
+            }}
           />
         ) : (
           <div className="size-52 animate-pulse rounded-lg bg-neutral-200" />

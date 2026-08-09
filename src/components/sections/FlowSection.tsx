@@ -60,22 +60,30 @@ const STEPS = [
 export function FlowSection() {
   return (
     <DeckShell
-      index="04"
+      index="03"
       title="Hải trình sẽ diễn ra như thế nào?"
       lead="Gameshow gồm 05 Thử thách. Trước mỗi Thử thách, đội chỉ được biết chủ đề, chưa biết trước nội dung trò chơi cụ thể."
     >
-      <div className="space-y-3">
-        {STEPS.map((item, i) => (
-          <Card
-            key={item.step}
-            eyebrow={item.step}
-            title={item.title}
-            delay={Math.min(i * 40, 200)}
-          >
-            {item.body}
-          </Card>
-        ))}
-      </div>
+      {/* 05 bước gộp trong một thẻ: đọc liền mạch, ngắn hơn năm thẻ rời. */}
+      <Card title="Trình tự của mỗi Thử thách" accent="energy">
+        <ol className="space-y-4">
+          {STEPS.map((item, i) => (
+            <li key={item.step} className="flex gap-3.5">
+              <span className="shrink-0 text-[15px] leading-relaxed">
+                <span className="font-mono text-[11px] font-semibold tabular-nums text-energy">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </span>
+              <div className="min-w-0 flex-1">
+                <h4 className="text-[15px] font-bold leading-relaxed tracking-tight">
+                  {item.title}
+                </h4>
+                <div className="mt-1">{item.body}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Card>
 
       <Card title="Quy định tham gia" delay={240} accent="route">
         <p className="text-[15px] leading-relaxed text-text/90">

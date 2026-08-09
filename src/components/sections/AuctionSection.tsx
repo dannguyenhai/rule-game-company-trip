@@ -5,30 +5,11 @@ import { Callout, Card, Hi, RuleList, deckDelay } from "@/components/ui";
 export function AuctionSection() {
   return (
     <DeckShell
-      index="08"
+      index="06"
       title="Đấu giá vật phẩm Booster"
-      lead="Sau Thử thách 2, hệ thống sẽ mở phiên đấu giá. Mỗi đội sẽ sở hữu đúng 01 Booster sau khi phiên đấu giá kết thúc."
+      lead="Sau Thử thách 2, mỗi đội đấu giá để sở hữu đúng 01 Booster — vật phẩm chiến thuật giúp tăng phần thưởng, bảo vệ Energy, giảm thiệt hại hoặc lật ngược tình thế. Game Master giới thiệu đầy đủ công dụng của 04 Booster trước khi phiên đấu giá bắt đầu."
     >
-      <Card title="Booster là gì?" accent="route">
-        <p className="text-[15px] leading-relaxed text-muted">
-          Booster là vật phẩm chiến thuật có thể giúp đội:
-        </p>
-        <RuleList
-          className="mt-3"
-          items={[
-            "Tăng phần thưởng.",
-            "Bảo vệ Energy.",
-            "Giảm thiệt hại.",
-            "Tạo cơ hội lật ngược tình thế.",
-          ]}
-        />
-        <p className="mt-4 text-[14px] leading-relaxed text-muted">
-          Trước khi đấu giá, Game Master sẽ giới thiệu đầy đủ công dụng và điều
-          kiện sử dụng của 04 Booster.
-        </p>
-      </Card>
-
-      <Card title="Tóm tắt cơ chế" eyebrow="Phiên đấu giá gồm 02 vòng" delay={60}>
+      <Card title="Tóm tắt cơ chế" eyebrow="Phiên đấu giá gồm 02 vòng">
         <div className="space-y-4">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-route">

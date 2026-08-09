@@ -1,15 +1,23 @@
 import { DeckShell } from "@/components/deck/DeckShell";
 import { EnergyCalculator } from "@/components/EnergyCalculator";
-import { Callout, Card, Chip, Hi, RuleList, deckDelay } from "@/components/ui";
+import {
+  Callout,
+  Card,
+  Chip,
+  Example,
+  Hi,
+  RuleList,
+  deckDelay,
+} from "@/components/ui";
 
 export function InvestSection() {
   return (
     <DeckShell
-      index="06"
-      title="Đầu tư Energy là gì?"
-      lead="Tại một số Thử thách, Captain sẽ bí mật quyết định số Energy đội muốn đầu tư vào kết quả của Thử thách đó."
+      index="05"
+      title="Đầu tư Energy"
+      lead="Tại một số Thử thách, Captain bí mật quyết định số Energy đội muốn đặt vào kết quả."
     >
-      <Card title="Cơ chế này được áp dụng tại" accent="energy">
+      <Card title="Áp dụng tại" accent="energy">
         <div className="flex flex-wrap gap-2">
           <Chip tone="energy">Thử thách 1</Chip>
           <Chip tone="energy">Thử thách 2</Chip>
@@ -26,16 +34,12 @@ export function InvestSection() {
         <RuleList
           items={[
             <>
-              Tối thiểu <Hi>01 Energy</Hi>.
+              Tối thiểu <Hi>01 Energy</Hi>, tối đa <Hi>30%</Hi> số Energy đội
+              đang sở hữu.
             </>,
             <>
-              Tối đa <Hi>30%</Hi> số Energy đội đang sở hữu.
-            </>,
-            <>
-              Chỉ chấp nhận <Hi tone="route">số nguyên</Hi>.
-            </>,
-            <>
-              Nếu kết quả 30% có số lẻ, <Hi tone="route">làm tròn xuống</Hi>.
+              Chỉ nhận <Hi tone="route">số nguyên</Hi>, số lẻ{" "}
+              <Hi tone="route">làm tròn xuống</Hi>.
             </>,
           ]}
         />
@@ -45,24 +49,66 @@ export function InvestSection() {
         <EnergyCalculator />
       </div>
 
-      <Card title="Game Master công bố trước khi Captain quyết định" delay={140}>
+      <div style={deckDelay(140)} className="deck-item">
+        <Callout tone="danger" label="Sau khi Game Master thông báo">
+          <span className="font-semibold uppercase tracking-tight text-delta">
+            Đầu tư đã được khóa
+          </span>{" "}
+          — đội không được thay đổi mức Energy đã đặt.
+        </Callout>
+      </div>
+
+      {/* Thắng và thua đặt cạnh nhau: người chơi so sánh trong một cái nhìn. */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Card title="Nếu chiến thắng" accent="energy" delay={180}>
+          <p className="text-[15px] leading-relaxed text-text/90">
+            Nhận{" "}
+            <strong className="text-energy">
+              phần thưởng Thử thách + Energy đã đầu tư
+            </strong>
+            .
+          </p>
+          <div className="mt-4">
+            <Example
+              rows={[
+                { label: "Phần thưởng", value: "40 Energy" },
+                { label: "Đội đầu tư", value: "20 Energy" },
+              ]}
+              result={{ label: "Nhận thêm", value: "+60" }}
+            />
+          </div>
+        </Card>
+
+        <Card title="Nếu không chiến thắng" delay={220}>
+          <p className="text-[15px] leading-relaxed text-text/90">
+            Chỉ mất đúng số Energy đã đầu tư.
+          </p>
+          <div className="mt-4">
+            <Example
+              rows={[
+                { label: "Đội đầu tư", value: "20 Energy" },
+                { label: "Kết quả", value: "Không thắng" },
+              ]}
+              result={{ label: "Bị trừ", value: "−20" }}
+            />
+          </div>
+        </Card>
+      </div>
+
+      <Card title="Hai trường hợp cần nhớ" delay={260}>
         <RuleList
           items={[
-            "Chủ đề Thử thách.",
-            "Điều kiện chiến thắng.",
-            "Phần thưởng cơ bản.",
-            "Số người tham gia.",
-            "Thời gian thực hiện.",
+            <>
+              Một Thử thách có thể có <Hi>nhiều đội cùng thắng</Hi>: mọi đội đáp
+              ứng đủ điều kiện đều nhận phần thưởng và cộng lại đúng mức Energy
+              chính đội đó đã đầu tư.
+            </>,
+            <>
+              Đội <Hi tone="route">hết Energy</Hi> vẫn tiếp tục tham gia Thử
+              thách, chỉ là không đầu tư thêm được — thắng vẫn nhận phần thưởng.
+            </>,
           ]}
         />
-        <div className="mt-4">
-          <Callout tone="danger" label="Sau khi Game Master thông báo">
-            <span className="font-semibold uppercase tracking-tight text-delta">
-              Đầu tư đã được khóa
-            </span>{" "}
-            — đội không được thay đổi mức Energy đã đầu tư.
-          </Callout>
-        </div>
       </Card>
     </DeckShell>
   );

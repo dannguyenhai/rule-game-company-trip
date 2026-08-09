@@ -6,7 +6,7 @@ import { deckDelay } from "@/components/ui";
 
 export function RememberSection() {
   return (
-    <DeckShell index="12" title="07 điều người chơi cần nhớ">
+    <DeckShell index="09" title="07 điều người chơi cần nhớ">
       <div className="space-y-2.5">
         {REMEMBER.map((item, i) => (
           <div
