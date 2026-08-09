@@ -6,25 +6,26 @@
    --------------------------------------------------------------- */
 
 :root {
-  --bg: #05070f;
-  --bg-deep: #03050b;
-  --surface: #0a0e1b;
-  --surface-2: #101627;
-  --line: rgb(255 255 255 / 0.08);
-  --line-strong: rgb(255 255 255 / 0.16);
+  /* Lấy từ Key Visual Gala Dinner: navy biển đêm, ánh sáng hải trình xanh lam. */
+  --bg: #041226;
+  --bg-deep: #020a16;
+  --surface: #091d38;
+  --surface-2: #0e2747;
+  --line: rgb(150 200 255 / 0.12);
+  --line-strong: rgb(150 200 255 / 0.24);
 
-  --text: #e9edf7;
-  --text-muted: #8c96ad;
-  --text-dim: #5d6679;
+  --text: #e9f2ff;
+  --text-muted: #93aecd;
+  --text-dim: #62809f;
 
-  --energy: #ffc24b;
-  --energy-soft: #ffdb96;
-  --route: #4cc9f0;
+  --energy: #4fc1ff;
+  --energy-soft: #a9dcff;
+  --route: #c9dcf2;
 
   --alpha: #5b8cff;
-  --beta: #34d399;
-  --gamma: #fbbf24;
-  --delta: #fb7185;
+  --beta: #3fd6b0;
+  --gamma: #ffc24b;
+  --delta: #ff7a8a;
 
   /* Strong curves — the built-in CSS easings are too weak. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -54,6 +55,27 @@
 
   --font-sans: var(--font-be-vietnam);
   --font-mono: var(--font-jetbrains);
+  --font-display: var(--font-playfair);
+}
+
+/*
+ * Chữ bạc của Key Visual: gradient trắng → xanh nhạt cắt theo nét chữ.
+ * padding-top là bắt buộc: background-clip chỉ phủ hộp của phần tử, nên dấu
+ * tiếng Việt hai tầng (Ẫ, Ố) tràn khỏi hộp sẽ trở nên trong suốt.
+ */
+.chrome-text {
+  padding-top: 0.18em;
+  background: linear-gradient(
+    170deg,
+    #ffffff 0%,
+    #dceaff 34%,
+    #7fb6e8 58%,
+    #ffffff 78%,
+    #b9d6f5 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 * {
@@ -92,13 +114,13 @@ body {
   pointer-events: none;
   background:
     radial-gradient(
-      120% 80% at 50% -10%,
-      rgb(76 201 240 / 0.14) 0%,
-      transparent 60%
+      130% 85% at 50% -15%,
+      rgb(79 193 255 / 0.16) 0%,
+      transparent 62%
     ),
     radial-gradient(
-      90% 60% at 85% 105%,
-      rgb(255 194 75 / 0.1) 0%,
+      90% 55% at 82% 100%,
+      rgb(79 193 255 / 0.12) 0%,
       transparent 60%
     ),
     var(--bg);

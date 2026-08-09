@@ -5,12 +5,18 @@
 
 export const EVENT = {
   org: "Xipat Company Trip 2026",
-  title: "Make Your Move",
+  occasion: "Gala Dinner",
+  title: "Dẫn Lối",
+  titleEn: "Make Your Move",
   subtitle: "The Strategy Game",
+  destination: "Destination 2026",
   docTitle: "Hướng dẫn dành cho người chơi",
   prize: "6.000.000 VNĐ",
   prizeTitle: "Quán quân — Giải Dẫn Lối Xuất Sắc 2026",
 } as const;
+
+/** Các cột mốc chiến lược trên Key Visual của sự kiện. */
+export const DESTINATION_NODES = ["X2", "Moats", "AI-First"] as const;
 
 /** Mục lục — dùng chung cho thanh điều hướng và scrollspy. */
 export const SECTIONS = [

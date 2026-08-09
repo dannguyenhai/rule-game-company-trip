@@ -33,14 +33,14 @@ export function QRPanel() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative rounded-3xl border border-line-strong bg-white p-4 shadow-[0_0_60px_-12px_rgb(255_194_75/0.45)] sm:p-5">
+      <div className="relative rounded-3xl border border-line-strong bg-white p-4 shadow-[0_0_70px_-10px_rgb(79_193_255/0.55)] sm:p-5">
         {url ? (
           <QRCodeSVG
             value={url}
             size={208}
             level="M"
             bgColor="#ffffff"
-            fgColor="#05070f"
+            fgColor="#041226"
             marginSize={0}
           />
         ) : (

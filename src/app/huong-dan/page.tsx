@@ -792,10 +792,12 @@ export default function GuidePage() {
             <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-dim">
               {EVENT.org}
             </p>
-            <p className="mt-3 text-lg font-extrabold uppercase tracking-tight">
-              Make Your Move
+            <p className="chrome-text mt-3 font-display text-2xl font-black uppercase">
+              {EVENT.title}
             </p>
-            <p className="mt-1 text-[13px] text-muted">{EVENT.subtitle}</p>
+            <p className="mt-1.5 font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
+              {EVENT.titleEn}
+            </p>
             <Link
               href="/"
               className="pressable mt-6 inline-block rounded-full border border-line-strong px-5 py-2.5 text-sm font-semibold text-muted transition-colors duration-200 ease-out hover:text-text"
@@ -814,13 +816,17 @@ function GuideHero() {
     <header className="relative mx-auto w-full max-w-3xl px-5 pb-8 pt-14 sm:pt-20">
       <Reveal>
         <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-          {EVENT.org}
+          {EVENT.org} — {EVENT.occasion}
         </p>
-        <h1 className="mt-5 text-[clamp(2.1rem,9vw,3.25rem)] font-black uppercase leading-[0.95] tracking-[-0.03em]">
-          Make Your <span className="text-energy">Move</span>
+        <h1 className="chrome-text mt-3 font-display text-[clamp(2.6rem,12vw,4.25rem)] font-black uppercase leading-[1.02]">
+          {EVENT.title}
         </h1>
+        <p className="mt-2.5 font-mono text-[clamp(0.68rem,3vw,0.9rem)] uppercase tracking-[0.38em] text-text/90">
+          {EVENT.titleEn}
+          <span className="text-energy">_</span>
+        </p>
         <div className="mt-4 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
-          <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-route">
+          <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-energy">
             {EVENT.subtitle}
           </p>
           <span className="hidden h-3.5 w-px bg-line-strong sm:block" />
