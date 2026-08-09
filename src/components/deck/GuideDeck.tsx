@@ -212,7 +212,7 @@ export function GuideDeck() {
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
-      <header className="relative z-30 shrink-0 border-b border-line bg-bg/92 backdrop-blur-xl">
+      <header className="relative z-30 shrink-0 border-b border-line bg-bg/92 pt-[env(safe-area-inset-top)] backdrop-blur-md">
         <DeckNav activeIndex={index} onSelect={(next) => goTo(next)} />
         <span
           aria-hidden
@@ -261,19 +261,22 @@ export function GuideDeck() {
         className="pointer-events-none relative z-20 -mt-16 h-16 shrink-0 bg-linear-to-t from-bg to-transparent transition-opacity duration-200 ease-out"
       />
 
-      <footer className="relative z-30 shrink-0 border-t border-line bg-bg/92 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
+      {/* Thanh điều hướng nằm trong tầm ngón cái, chừa chỗ cho home indicator. */}
+      <footer className="relative z-30 shrink-0 border-t border-line bg-bg/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-md">
+        <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3">
           <button
             type="button"
             onClick={() => step(-1)}
             disabled={index === 0}
-            className="pressable rounded-full border border-line-strong px-4 py-2 text-[13px] font-semibold text-muted transition-colors duration-200 ease-out hover:text-text disabled:pointer-events-none disabled:opacity-30"
+            className="pressable flex h-12 shrink-0 items-center rounded-full border border-line-strong px-5 text-sm font-semibold text-muted transition-colors duration-200 ease-out hover:text-text disabled:pointer-events-none disabled:opacity-25"
           >
             ← Trước
           </button>
 
-          <p className="font-mono text-[12px] tabular-nums text-dim">
-            <span className="text-text">{String(index + 1).padStart(2, "0")}</span>
+          <p className="flex-1 text-center font-mono text-[13px] tabular-nums text-dim">
+            <span className="text-text">
+              {String(index + 1).padStart(2, "0")}
+            </span>
             {" / "}
             {String(total).padStart(2, "0")}
           </p>
@@ -282,7 +285,7 @@ export function GuideDeck() {
             type="button"
             onClick={() => step(1)}
             disabled={index === total - 1}
-            className="pressable rounded-full bg-energy px-4 py-2 text-[13px] font-bold text-bg-deep disabled:pointer-events-none disabled:opacity-30"
+            className="pressable flex h-12 shrink-0 items-center rounded-full bg-energy px-6 text-sm font-bold text-bg-deep disabled:pointer-events-none disabled:opacity-25"
           >
             Tiếp →
           </button>

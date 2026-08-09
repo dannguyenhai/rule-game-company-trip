@@ -29,7 +29,7 @@ export function Card({
     <div
       style={deckDelay(delay)}
       className={clsx(
-        "deck-item relative overflow-hidden rounded-2xl border border-line bg-surface/70 p-5 backdrop-blur-sm sm:p-6",
+        "deck-item relative overflow-hidden rounded-2xl border border-line bg-surface/70 p-5 sm:p-6",
         className,
       )}
     >
@@ -193,9 +193,15 @@ export function PrizeBanner({
         className,
       )}
     >
+      {/* Quầng sáng bằng gradient thay vì filter blur: rẻ hơn nhiều trên máy
+          yếu, và trông giống hệt ở kích thước này. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/2 size-56 -translate-x-1/2 rounded-full bg-energy/20 blur-3xl"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(65% 55% at 50% 0%, rgb(79 193 255 / 0.22), transparent 72%)",
+        }}
       />
 
       <p className="relative font-mono text-[10px] uppercase tracking-[0.24em] text-energy">

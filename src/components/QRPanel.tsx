@@ -58,7 +58,7 @@ export function QRPanel() {
       <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
         <a
           href={GUIDE_PATH}
-          className="pressable rounded-full bg-energy px-5 py-2.5 text-sm font-bold text-bg-deep"
+          className="pressable flex h-12 items-center rounded-full bg-energy px-6 text-sm font-bold text-bg-deep"
         >
           Mở hướng dẫn
         </a>
@@ -73,7 +73,7 @@ export function QRPanel() {
               setCopied(false);
             }
           }}
-          className="pressable rounded-full border border-line-strong px-5 py-2.5 text-sm font-semibold text-muted transition-colors duration-200 ease-out hover:text-text"
+          className="pressable flex h-12 items-center rounded-full border border-line-strong px-6 text-sm font-semibold text-muted transition-colors duration-200 ease-out hover:text-text"
         >
           {copied ? "Đã sao chép" : "Sao chép link"}
         </button>

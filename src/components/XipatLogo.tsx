@@ -1,5 +1,26 @@
 import clsx from "clsx";
 
+const SIZES = {
+  sm: {
+    text: "text-[19px]",
+    mark: "size-[10px]",
+    gap: "gap-[4px]",
+    lift: "-translate-y-[2px]",
+  },
+  md: {
+    text: "text-[24px]",
+    mark: "size-[12px]",
+    gap: "gap-[5px]",
+    lift: "-translate-y-[2px]",
+  },
+  lg: {
+    text: "text-[32px] sm:text-[40px]",
+    mark: "size-[16px] sm:size-[20px]",
+    gap: "gap-[6px] sm:gap-[7px]",
+    lift: "-translate-y-[3px] sm:-translate-y-[4px]",
+  },
+} as const;
+
 /**
  * Wordmark Xipat dựng lại bằng chữ + ký hiệu địa cầu.
  * Muốn khớp tuyệt đối bộ nhận diện, thay khối này bằng file SVG gốc của
@@ -10,22 +31,20 @@ export function XipatLogo({
   size = "sm",
 }: {
   className?: string;
-  size?: "sm" | "lg";
+  size?: keyof typeof SIZES;
 }) {
+  const s = SIZES[size];
+
   return (
     <span
-      className={clsx(
-        "inline-flex items-center",
-        size === "sm" ? "gap-[3px]" : "gap-[5px]",
-        className,
-      )}
-      aria-label="Xipat"
       role="img"
+      aria-label="Xipat"
+      className={clsx("inline-flex items-center text-text", s.gap, className)}
     >
       <span
         className={clsx(
-          "font-extrabold lowercase leading-none tracking-[-0.03em] text-text",
-          size === "sm" ? "text-[15px]" : "text-[22px] sm:text-[26px]",
+          "font-bold lowercase leading-none tracking-[-0.02em]",
+          s.text,
         )}
       >
         xipat
@@ -34,21 +53,24 @@ export function XipatLogo({
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden
-        className={clsx(
-          "shrink-0 self-start text-text",
-          size === "sm" ? "size-[8px]" : "size-[12px]",
-        )}
+        className={clsx("shrink-0", s.mark, s.lift)}
       >
-        <circle cx="12" cy="12" r="10.5" stroke="currentColor" strokeWidth="2.4" />
+        <circle
+          cx="12"
+          cy="12"
+          r="10.4"
+          stroke="currentColor"
+          strokeWidth="2.6"
+        />
         <ellipse
           cx="12"
           cy="12"
-          rx="4.6"
-          ry="10.5"
+          rx="4.7"
+          ry="10.4"
           stroke="currentColor"
-          strokeWidth="2.4"
+          strokeWidth="2.2"
         />
-        <path d="M1.5 12h21" stroke="currentColor" strokeWidth="2.4" />
+        <path d="M1.9 12h20.2" stroke="currentColor" strokeWidth="2.2" />
       </svg>
     </span>
   );

@@ -9,25 +9,25 @@ const TONE: Record<
   alpha: {
     text: "text-alpha",
     border: "border-alpha/25",
-    glow: "from-alpha/20",
+    glow: "rgb(91 140 255 / 0.2)",
     dot: "bg-alpha",
   },
   beta: {
     text: "text-beta",
     border: "border-beta/25",
-    glow: "from-beta/20",
+    glow: "rgb(63 214 176 / 0.18)",
     dot: "bg-beta",
   },
   gamma: {
     text: "text-gamma",
     border: "border-gamma/25",
-    glow: "from-gamma/20",
+    glow: "rgb(255 194 75 / 0.18)",
     dot: "bg-gamma",
   },
   delta: {
     text: "text-delta",
     border: "border-delta/25",
-    glow: "from-delta/20",
+    glow: "rgb(255 122 138 / 0.18)",
     dot: "bg-delta",
   },
 };
@@ -51,10 +51,10 @@ export function BoosterCard({
     >
       <span
         aria-hidden
-        className={clsx(
-          "pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-linear-to-br to-transparent blur-2xl",
-          tone.glow,
-        )}
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `radial-gradient(60% 50% at 100% 0%, ${tone.glow}, transparent 70%)`,
+        }}
       />
 
       <header className="relative flex items-center gap-2.5">

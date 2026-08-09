@@ -26,7 +26,7 @@ export function RememberSection() {
         style={deckDelay(320)}
         className="deck-item mt-8 border-t border-line pt-8 text-center"
       >
-        <XipatLogo className="justify-center" />
+        <XipatLogo size="md" className="justify-center" />
         <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.28em] text-dim">
           {EVENT.org}
         </p>
