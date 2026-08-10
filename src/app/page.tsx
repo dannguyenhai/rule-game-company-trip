@@ -110,10 +110,31 @@ function Facts() {
           </div>
         ))}
       </dl>
-      <p className="mt-5 text-center text-[13px] leading-relaxed text-dim lg:text-left">
-        {EVENT.prizeTitle} —{" "}
-        <span className="font-semibold text-energy-soft">{EVENT.prize}</span>
-      </p>
+      {/* Phần thưởng là thứ kéo người chơi vào cuộc — không để nó chìm. */}
+      <div className="relative mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 overflow-hidden rounded-2xl border border-energy/30 bg-bg-deep/85 px-4 py-3.5 text-left">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(75% 120% at 100% 50%, rgb(79 193 255 / 0.18), transparent 70%)",
+          }}
+        />
+        <div className="relative">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-energy">
+            Giải Quán quân
+          </p>
+          <p className="mt-1 text-[12px] font-medium text-muted">
+            Dẫn Lối Xuất Sắc 2026
+          </p>
+        </div>
+        <p
+          className="relative font-mono text-[clamp(1.3rem,6.5vw,1.8rem)] font-black leading-none whitespace-nowrap text-energy"
+          style={{ textShadow: "0 0 26px rgb(79 193 255 / 0.45)" }}
+        >
+          {EVENT.prize}
+        </p>
+      </div>
     </>
   );
 }
@@ -126,9 +147,9 @@ const ROUTE_PATH =
  * để nhãn không chạm vùng mã QR bên phải.
  */
 const ROUTE_NODES = [
-  { x: 247, y: 341 },
-  { x: 460, y: 288 },
-  { x: 670, y: 257 },
+  { x: 247, y: 341, at: 0.21 },
+  { x: 460, y: 288, at: 0.34 },
+  { x: 670, y: 257, at: 0.47 },
 ];
 
 /**
@@ -140,29 +161,37 @@ function SeaRoute() {
     <div aria-hidden className="pointer-events-none absolute inset-0">
       {/* Node vẽ trong cùng hệ toạ độ với đường, nên luôn nằm đúng trên hải trình. */}
       <svg
-        className="absolute inset-x-0 bottom-0 h-[46%] w-full"
+        className="absolute inset-x-0 bottom-0 h-[40%] w-full opacity-45 sm:opacity-100"
         viewBox="0 0 1440 420"
         preserveAspectRatio="xMidYMax slice"
         fill="none"
       >
         <path
           d={ROUTE_PATH}
+          pathLength="1"
           stroke="var(--energy)"
           strokeOpacity="0.35"
           strokeWidth="2"
+          className="route-draw"
         />
         <path
           d={ROUTE_PATH}
+          pathLength="1"
           stroke="#ffffff"
           strokeOpacity="0.5"
           strokeWidth="1"
-          className="route-flow"
+          className="route-draw"
         />
 
-        {/* Chỉ giữ chấm sáng, không gắn nhãn chữ: nhãn nằm chồng lên phần
-            nội dung ở mọi tỉ lệ màn hình rộng. */}
-        {ROUTE_NODES.map(({ x, y }, i) => (
-          <g key={DESTINATION_NODES[i]}>
+        {/* Cột mốc sáng lên đúng lúc nét vẽ chạy tới, nên chuyển động nói
+            đúng một điều: hải trình đi qua đây. */}
+        {ROUTE_NODES.map(({ x, y, at }, i) => (
+          <g
+            key={DESTINATION_NODES[i]}
+            // Trên màn hẹp, chấm mốc rơi trúng vùng chữ nên chỉ hiện từ sm trở lên.
+            className="route-node max-sm:hidden"
+            style={{ "--node-delay": `${200 + at * 1400}ms` } as React.CSSProperties}
+          >
             <circle cx={x} cy={y} r="12" fill="var(--energy)" fillOpacity="0.14" />
             <circle cx={x} cy={y} r="5" fill="var(--energy)" fillOpacity="0.9" />
           </g>

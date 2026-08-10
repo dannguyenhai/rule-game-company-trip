@@ -28,7 +28,7 @@ export function Countdown() {
   ];
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-energy/25 p-4 sm:p-5">
+    <div className="relative overflow-hidden rounded-2xl border border-energy/25 bg-bg-deep/85 p-4 sm:p-5">
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0"
