@@ -46,7 +46,34 @@ export function InvestSection() {
       </Card>
 
       <div style={deckDelay(100)} className="deck-item">
-        <EnergyCalculator />
+        <EnergyCalculator
+          labels={{
+            input: "Tổng Energy đội đang có",
+            note: "Công cụ tham khảo nhanh. Con số chính thức luôn do Game Master công bố tại Gameshow.",
+            metrics: [
+              {
+                key: "invest",
+                label: "Đầu tư tối đa / Thử thách",
+                hint: "30% Energy, làm tròn xuống",
+              },
+              {
+                key: "fund",
+                label: "Quỹ đấu giá tối đa",
+                hint: "80% Energy sau Thử thách 2",
+              },
+              {
+                key: "reserved",
+                label: "Energy được bảo toàn",
+                hint: "Tối thiểu 20% không dùng để đấu giá",
+              },
+              {
+                key: "last",
+                label: "Giá Booster cuối cùng",
+                hint: "50% quỹ đấu giá, nếu đội nhận Booster còn lại",
+              },
+            ],
+          }}
+        />
       </div>
 
       <div style={deckDelay(140)} className="deck-item">

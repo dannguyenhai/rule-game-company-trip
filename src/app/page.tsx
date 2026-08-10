@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { QRPanel } from "@/components/QRPanel";
 import { Reveal } from "@/components/Reveal";
 import { XipatLogo } from "@/components/XipatLogo";
+import { AccessGate } from "@/components/home/AccessGate";
+import { Countdown } from "@/components/home/Countdown";
 import { DESTINATION_NODES, EVENT } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -17,19 +20,19 @@ const FACTS = [
 
 export default function Home() {
   return (
-    <main className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-5 py-14 sm:py-20">
+    <main className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-5 py-9 sm:py-14">
       <SeaRoute />
 
       {/* Một cột trên điện thoại, hai cột khi chiếu lên màn hình ngang. */}
-      <div className="relative grid w-full max-w-md items-center gap-12 lg:max-w-5xl lg:grid-cols-[1fr_auto] lg:gap-20">
+      <div className="relative grid w-full max-w-md items-center gap-9 lg:max-w-5xl lg:grid-cols-[1fr_auto] lg:gap-16">
         <div className="text-center lg:text-left">
           <Reveal>
             <XipatLogo size="lg" className="justify-center lg:justify-start" />
-            <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.32em] text-muted">
+            <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.32em] text-muted">
               {EVENT.org}
             </p>
 
-            <div className="mt-6 flex items-center justify-center gap-3 lg:justify-start">
+            <div className="mt-5 flex items-center justify-center gap-3 lg:justify-start">
               <span className="h-px w-7 bg-line-strong" />
               <p className="font-mono text-[12px] uppercase tracking-[0.34em] text-route">
                 {EVENT.occasion}
@@ -37,7 +40,7 @@ export default function Home() {
               <span className="h-px w-7 bg-line-strong" />
             </div>
 
-            <h1 className="chrome-text mt-2 font-display text-[clamp(3.4rem,17vw,7rem)] font-black uppercase leading-[1.02] tracking-[-0.01em]">
+            <h1 className="chrome-text mt-2 font-display text-[clamp(3rem,15vw,7rem)] font-black uppercase leading-[1.02] tracking-[-0.01em]">
               {EVENT.title}
             </h1>
 
@@ -56,13 +59,17 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={70}>
-            <p className="mt-6 text-[15px] leading-relaxed text-muted lg:max-w-md">
+            <p className="mt-5 text-[15px] leading-relaxed text-muted lg:max-w-md">
               Mỗi nước đi là một quyết định. Mỗi quyết định là Energy. Giữ Tổng
               Energy cao nhất khi Hải trình khép lại.
             </p>
           </Reveal>
 
-          <Reveal delay={210} className="hidden lg:block">
+          <Reveal delay={110} className="mt-6 lg:max-w-md">
+            <Countdown />
+          </Reveal>
+
+          <Reveal delay={210} className="hidden lg:mt-7 lg:block">
             <Facts />
           </Reveal>
         </div>
@@ -72,7 +79,13 @@ export default function Home() {
             <QRPanel />
           </Reveal>
 
-          <Reveal delay={210} className="mt-12 lg:hidden">
+          <Reveal delay={180} className="mx-auto mt-5 flex max-w-70">
+            <Suspense fallback={<div className="h-12 w-full" />}>
+              <AccessGate />
+            </Suspense>
+          </Reveal>
+
+          <Reveal delay={220} className="mt-8 lg:hidden">
             <Facts />
           </Reveal>
         </div>

@@ -24,13 +24,38 @@ src/lib/content.ts
 
 Nội dung dạng văn bản dài của từng mục nằm trong `src/app/huong-dan/page.tsx`.
 
+## Khoá Hướng dẫn tới giờ mở
+
+Hướng dẫn chỉ mở từ **19:30 ngày 14/08/2026 (giờ Việt Nam)**. Trước thời điểm đó, mọi lượt truy cập `/huong-dan` đều bị [proxy.ts](src/proxy.ts) chuyển về trang chủ — kể cả khi gõ thẳng URL.
+
+Nội dung luật được dựng ở phía máy chủ ([sections/index.tsx](src/components/sections/index.tsx)) nên **không nằm trong gói JavaScript tải về trình duyệt**; trước giờ mở không có cách nào đọc trước qua DevTools.
+
+BTC vào sớm bằng ô mật khẩu ở trang chủ. Đặt mật khẩu trên Vercel:
+
+```
+Project → Settings → Environment Variables
+ADMIN_PASSWORD = <mật khẩu của BTC>
+```
+
+Chạy local:
+
+```bash
+ADMIN_PASSWORD=mat-khau npm run dev
+```
+
+Nếu chưa đặt biến này, hệ thống dùng mật khẩu dự phòng `xipat-btc-2026` — **nên đổi trước sự kiện**. Mật khẩu đúng sẽ đặt một cookie `HttpOnly` có hiệu lực 7 ngày; cookie chỉ lưu vân tay của mật khẩu, không lưu mật khẩu.
+
+Đổi mốc giờ mở tại [event-time.ts](src/lib/event-time.ts).
+
 ## Deploy
 
-Dự án là Next.js App Router, deploy thẳng lên Vercel không cần biến môi trường:
+Dự án là Next.js App Router, deploy thẳng lên Vercel:
 
 ```bash
 npm run build
 ```
+
+Chỉ cần khai báo `ADMIN_PASSWORD`; ngoài ra không cần biến môi trường nào khác.
 
 ## Cấu trúc
 

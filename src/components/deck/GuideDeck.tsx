@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { DECK } from "@/components/sections/registry";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { DECK_META, HASH_ALIASES } from "@/lib/deck-meta";
 import { DeckNav } from "./DeckNav";
 
 const EASE = [0.23, 1, 0.32, 1] as const;
@@ -13,14 +13,7 @@ const MOMENTUM_MS = 400;
 const WHEEL_THRESHOLD = 80;
 const SWIPE_THRESHOLD = 60;
 
-/** Các phần đã gộp — link cũ vẫn mở đúng chỗ nội dung chuyển đến. */
-const HASH_ALIASES: Record<string, string> = {
-  "kich-hoat": "chuan-bi",
-  "cong-tru": "dau-tu",
-  "phan-dinh": "ket-qua",
-};
-
-export function GuideDeck() {
+export function GuideDeck({ sections }: { sections: ReactNode[] }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const reduce = useReducedMotion();
@@ -42,7 +35,7 @@ export function GuideDeck() {
 
   const goTo = useCallback(
     (next: number, dir?: number) => {
-      if (next < 0 || next >= DECK.length) return;
+      if (next < 0 || next >= DECK_META.length) return;
       setDirection(dir ?? (next > index ? 1 : -1));
       setIndex(next);
       lockRef.current = true;
@@ -154,7 +147,7 @@ export function GuideDeck() {
           break;
         case "End":
           event.preventDefault();
-          goTo(DECK.length - 1);
+          goTo(DECK_META.length - 1);
           break;
       }
     };
@@ -175,7 +168,7 @@ export function GuideDeck() {
     const frame = requestAnimationFrame(() => {
       const hash = initialHashRef.current ?? "";
       const id = HASH_ALIASES[hash] ?? hash;
-      const found = DECK.findIndex((entry) => entry.id === id);
+      const found = DECK_META.findIndex((entry) => entry.id === id);
       if (found > 0) goTo(found, 1);
     });
     return () => cancelAnimationFrame(frame);
@@ -184,7 +177,7 @@ export function GuideDeck() {
   }, []);
 
   useEffect(() => {
-    window.history.replaceState(null, "", `#${DECK[index].id}`);
+    window.history.replaceState(null, "", `#${DECK_META[index].id}`);
   }, [index]);
 
   useEffect(() => {
@@ -193,8 +186,8 @@ export function GuideDeck() {
     };
   }, []);
 
-  const { Component, id } = DECK[index];
-  const total = DECK.length;
+  const { id } = DECK_META[index];
+  const total = DECK_META.length;
 
   const variants = {
     enter: (dir: number) => ({
@@ -256,7 +249,7 @@ export function GuideDeck() {
             // màn dài vẫn cuộn bình thường.
             className="flex min-h-full"
           >
-            <Component />
+            {sections[index]}
           </motion.section>
         </AnimatePresence>
       </div>

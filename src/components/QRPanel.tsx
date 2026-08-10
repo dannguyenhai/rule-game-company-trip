@@ -29,7 +29,6 @@ export function QRPanel() {
     return () => window.clearTimeout(timer);
   }, [copied]);
 
-  const display = url.replace(/^https?:\/\//, "");
 
   return (
     <div className="flex flex-col items-center">
@@ -59,17 +58,8 @@ export function QRPanel() {
       <p className="mt-5 text-center text-[15px] font-semibold">
         Quét mã để đọc Hướng dẫn người chơi
       </p>
-      <p className="mt-1 font-mono text-[12px] text-dim">
-        {display || "đang tạo mã…"}
-      </p>
 
-      <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
-        <a
-          href={GUIDE_PATH}
-          className="pressable flex h-12 items-center rounded-full bg-energy px-6 text-sm font-bold text-bg-deep"
-        >
-          Mở hướng dẫn
-        </a>
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
         <button
           type="button"
           onClick={async () => {

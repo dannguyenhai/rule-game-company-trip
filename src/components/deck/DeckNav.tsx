@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { useEffect, useRef } from "react";
-import { DECK } from "@/components/sections/registry";
+import { DECK_META } from "@/lib/deck-meta";
 import { XipatLogo } from "@/components/XipatLogo";
 
 export function DeckNav({
@@ -75,7 +75,7 @@ export function DeckNav({
           className="pointer-events-none absolute left-0 top-2 bottom-2 rounded-full bg-energy transition-[transform,width] duration-[220ms] ease-out motion-reduce:transition-none"
         />
 
-        {DECK.map((entry, i) => {
+        {DECK_META.map((entry, i) => {
           const isActive = i === activeIndex;
           return (
             <button
