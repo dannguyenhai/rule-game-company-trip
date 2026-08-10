@@ -3,10 +3,22 @@ import { JOURNEY } from "@/lib/content";
 import { Chip, deckDelay } from "./ui";
 
 const NODE_STYLE: Record<string, string> = {
-  ritual: "border-line-strong bg-surface-2 text-muted",
-  challenge: "border-energy/60 bg-energy/10 text-energy",
-  auction: "border-route/60 bg-route/10 text-route",
-  final: "border-energy bg-energy text-bg-deep",
+  ritual: "border-line-strong text-muted",
+  challenge: "border-energy/60 text-energy",
+  auction: "border-route/60 text-route",
+  final: "border-energy text-bg-deep",
+};
+
+/**
+ * Nền node phải đục hoàn toàn, nếu không đường Hải trình chạy xuyên qua giữa
+ * hình tròn. Màu nhạt được phủ bằng gradient đặc lên nền, thay vì dùng nền
+ * bán trong suốt.
+ */
+const NODE_FILL: Record<string, { bg: string; tint?: string }> = {
+  ritual: { bg: "var(--surface-2)" },
+  challenge: { bg: "var(--bg)", tint: "rgb(79 193 255 / 0.16)" },
+  auction: { bg: "var(--bg)", tint: "rgb(201 220 242 / 0.14)" },
+  final: { bg: "var(--energy)" },
 };
 
 export function JourneyMap() {
@@ -26,6 +38,12 @@ export function JourneyMap() {
         >
           <div className="relative z-10 shrink-0">
             <span
+              style={{
+                backgroundColor: NODE_FILL[stop.kind].bg,
+                backgroundImage: NODE_FILL[stop.kind].tint
+                  ? `linear-gradient(${NODE_FILL[stop.kind].tint}, ${NODE_FILL[stop.kind].tint})`
+                  : undefined,
+              }}
               className={clsx(
                 "relative grid size-[42px] place-items-center rounded-full border font-mono text-[11px] font-bold",
                 NODE_STYLE[stop.kind],
