@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { UNLOCK_FULL_LABEL } from "@/lib/event-time";
+import { SlipperStrike } from "./SlipperStrike";
 import { useCountdown } from "./useCountdown";
 
 const GUIDE_PATH = "/huong-dan";
@@ -16,6 +17,8 @@ export function AccessGate() {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
+  /** Đếm số lần gõ sai — đổi giá trị là dép bay lại từ đầu. */
+  const [strikes, setStrikes] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -38,6 +41,7 @@ export function AccessGate() {
       return;
     }
     setStatus("error");
+    setStrikes((count) => count + 1);
   }
 
   if (unlocked) {
@@ -53,6 +57,8 @@ export function AccessGate() {
 
   return (
     <div className="w-full">
+      {strikes > 0 ? <SlipperStrike key={strikes} /> : null}
+
       <div
         aria-disabled
         className="flex h-12 w-full items-center justify-center gap-2 rounded-full border border-line-strong px-5 text-sm font-semibold text-dim"
@@ -113,8 +119,8 @@ export function AccessGate() {
             </button>
           </div>
           {status === "error" ? (
-            <p className="mt-2 text-[13px] text-delta">
-              Mật khẩu không đúng. Thử lại.
+            <p className="mt-2 text-[13px] font-semibold text-delta">
+              Mật khẩu không đúng — thử lại lần nữa.
             </p>
           ) : null}
         </form>
