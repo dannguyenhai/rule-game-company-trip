@@ -57,6 +57,11 @@ npm run build
 
 Chỉ cần khai báo `ADMIN_PASSWORD`; ngoài ra không cần biến môi trường nào khác.
 
+> **Đừng bỏ cờ `--webpack` trong script `build`.** Turbopack của Next 16.3 dựng
+> hỏng CSS của `next/font/google` khi build trên Vercel (`Can't resolve
+> '@vercel/turbopack-next/internal/font/google/font'`). Webpack dựng đúng.
+> `next dev` vẫn chạy Turbopack bình thường.
+
 ## Cấu trúc
 
 ```

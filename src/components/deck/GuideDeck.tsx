@@ -8,10 +8,6 @@ import { DeckNav } from "./DeckNav";
 const EASE = [0.23, 1, 0.32, 1] as const;
 /** Khoá chuyển màn: đủ dài để animation chạy xong, đủ ngắn để không thấy chờ. */
 const LOCK_MS = 520;
-/** Trackpad có quán tính — chỉ nhả khoá khi ngón tay đã thực sự dừng. */
-const MOMENTUM_MS = 400;
-const WHEEL_THRESHOLD = 80;
-const SWIPE_THRESHOLD = 60;
 
 export function GuideDeck({ sections }: { sections: ReactNode[] }) {
   const [index, setIndex] = useState(0);
@@ -22,14 +18,11 @@ export function GuideDeck({ sections }: { sections: ReactNode[] }) {
   const fadeRef = useRef<HTMLSpanElement>(null);
   const lockRef = useRef(false);
   const timerRef = useRef<number | null>(null);
-  const wheelAccRef = useRef(0);
-  const touchRef = useRef({ y: 0, lastY: 0, atTop: false, atBottom: false });
 
   const armRelease = useCallback((ms: number) => {
     if (timerRef.current) window.clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
       lockRef.current = false;
-      wheelAccRef.current = 0;
     }, ms);
   }, []);
 
@@ -39,7 +32,6 @@ export function GuideDeck({ sections }: { sections: ReactNode[] }) {
       setDirection(dir ?? (next > index ? 1 : -1));
       setIndex(next);
       lockRef.current = true;
-      wheelAccRef.current = 0;
       armRelease(LOCK_MS);
     },
     [armRelease, index],
@@ -71,55 +63,6 @@ export function GuideDeck({ sections }: { sections: ReactNode[] }) {
     const remaining = el.scrollHeight - el.clientHeight - el.scrollTop;
     fade.style.opacity = remaining > 24 ? "1" : "0";
   }, []);
-
-  // Nội dung dài hơn màn hình thì cuộn trong phần đó trước; chỉ khi đã chạm
-  // mép mới chuyển sang phần kế tiếp.
-  const onWheel = useCallback(
-    (event: React.WheelEvent) => {
-      if (lockRef.current) {
-        armRelease(MOMENTUM_MS);
-        return;
-      }
-
-      const { atTop, atBottom } = edges();
-      const goingDown = event.deltaY > 0;
-      if ((goingDown && !atBottom) || (!goingDown && !atTop)) {
-        wheelAccRef.current = 0;
-        return;
-      }
-
-      wheelAccRef.current += event.deltaY;
-      if (Math.abs(wheelAccRef.current) >= WHEEL_THRESHOLD) {
-        step(wheelAccRef.current > 0 ? 1 : -1);
-      }
-    },
-    [armRelease, edges, step],
-  );
-
-  const onTouchStart = useCallback(
-    (event: React.TouchEvent) => {
-      const y = event.touches[0].clientY;
-      const { atTop, atBottom } = edges();
-      touchRef.current = { y, lastY: y, atTop, atBottom };
-    },
-    [edges],
-  );
-
-  const onTouchMove = useCallback((event: React.TouchEvent) => {
-    touchRef.current.lastY = event.touches[0].clientY;
-  }, []);
-
-  const onTouchEnd = useCallback(() => {
-    const { y, lastY, atTop, atBottom } = touchRef.current;
-    const delta = y - lastY;
-    if (Math.abs(delta) < SWIPE_THRESHOLD) return;
-
-    const now = edges();
-    // Phải ở mép cả lúc bắt đầu lẫn lúc kết thúc cú vuốt, để một cú vuốt dài
-    // trong nội dung không vô tình nhảy màn.
-    if (delta > 0 && atBottom && now.atBottom) step(1);
-    if (delta < 0 && atTop && now.atTop) step(-1);
-  }, [edges, step]);
 
   // Bàn phím: mũi tên, Page Up/Down, Home/End.
   useEffect(() => {
@@ -223,11 +166,7 @@ export function GuideDeck({ sections }: { sections: ReactNode[] }) {
 
       <div
         ref={scrollerRef}
-        onWheel={onWheel}
         onScroll={syncFade}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
         className="relative flex-1 overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         <AnimatePresence
