@@ -164,7 +164,7 @@ export const BOOSTERS: Booster[] = [
     alias: "Rescue",
     tagline: "Dành cho đội đang cần cơ hội phục hồi.",
     timing:
-      "Kích hoạt SAU khi không chiến thắng tại Thử thách 4 hoặc Thử thách 5, với điều kiện Tổng Energy sau khi bị trừ còn từ 80 Energy trở xuống.",
+      "Kích hoạt SAU khi không chiến thắng tại Thử thách 4 hoặc Thử thách 5. Không kèm điều kiện về Tổng Energy — kích hoạt là được hoàn.",
     effect: ["Hoàn lại 50% Energy vừa mất, tối đa 20 Energy."],
     examples: ["Mất 20 → được hoàn 10.", "Mất 50 → được hoàn tối đa 20."],
   },
